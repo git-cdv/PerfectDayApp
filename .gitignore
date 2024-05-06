@@ -1,0 +1,73 @@
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Crash log files
+hs_err_pid*
+
+# Java class files
+*.class
+
+# Ignore Gradle files
+.gradle/
+build/
+
+# generated files
+bin/
+gen/
+
+# configuration
+.iws
+.ipr
+.iml
+
+# built generated package files
+*.apk
+*.ap_
+
+# Android Studio / IntelliJ IDEA
+*.iws
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+/out/
+
+# OS temporary files
+.DS_Store
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# For eclipse Eclipse
+proguard/
+
+# Android Patch ###
+gen-external-apklibs
+
+# Packaging files
+*.jar
+*.war
+*.ear
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof

@@ -1,26 +1,33 @@
 package chkan.example.perfectday.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = MainDarkGreen, // Dark Green (заголовки, кнопки)
+    secondary = SecondaryOliveGreen, // Olive Green (фоновая заливка элементов)
+    background = BgAlmostBlack, // Almost Black (фон)
+    surface = BgAlmostBlack, // Almost Black (для карточек, диалогов и т.д.)
+    onPrimary = BgWhite, // White (текст/icons на primary цвете)
+    onSecondary = BgWhite, // White (текст/icons на secondary цвете)
+    onBackground = TextLiteGreen, // Light Gray (текст на фоне)
+    onSurface = TextLiteGreen, // Light Gray (текст на surface)
+    tertiary = AccentLavender, // Lavender (иконки, ссылки)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = MainDarkGreen, // Dark Green (заголовки, кнопки)
+    secondary = SecondaryLightGreen, // Light Green (фоновая заливка элементов)
+    background = BgWhite, // White (фон)
+    surface = BgWhite, // White (для карточек, диалогов и т.д.)
+    onPrimary = BgWhite, // White (текст/icons на primary цвете)
+    onSecondary = BgAlmostBlack, // Black (текст/icons на secondary цвете)
+    onBackground = TextDarkGreen, // Dark Gray (текст на фоне)
+    onSurface = TextDarkGreen, // Dark Gray (текст на surface)
+    tertiary = AccentPeach //(иконки, ссылки)
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -36,16 +43,9 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun PerfectDayTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

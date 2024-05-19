@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
+import chkan.example.perfectday.ui.screens.MainScreen
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,15 +34,9 @@ class MainActivity : ComponentActivity() {
                 startExitAnimation(screen)
             }
         }
-        enableEdgeToEdge()
         setContent {
             PerfectDayTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MainScreen()
             }
         }
     }
@@ -72,18 +67,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainPreview() {
     PerfectDayTheme {
-        Greeting("Android")
+        MainScreen()
     }
 }

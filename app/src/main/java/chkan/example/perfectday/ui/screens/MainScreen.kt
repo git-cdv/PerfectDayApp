@@ -34,15 +34,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import chkan.example.navigation.Router
 import chkan.example.navigation.EmptyRouter
+import chkan.example.navigation.LocalRouter
 import chkan.example.perfectday.R
+import chkan.example.perfectday.domain.models.Task
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 
-@Composable
-fun MainScreen(router: Router) {
 
+@Composable
+fun MainScreen() {
+    val router = LocalRouter.current
     /*val dailyTasks by mainViewModel.dailyTasks.collectAsStateWithLifecycle()
     val weeklyTasks by mainViewModel.weeklyTasks.collectAsStateWithLifecycle()*/
+    MainScreenContent(dailyTasks = { listOf() }, goToAddTask = {
+        router.launch(AppRoute.AddTaskScreen)
+    })
+}
+@Composable
+fun MainScreenContent(dailyTasks: () -> List<Task>, goToAddTask: () -> Unit) {
 
     val list = remember{
         List(5) {index -> "Text Item #$index"}
@@ -62,7 +71,7 @@ fun MainScreen(router: Router) {
 
         item {
             OutlinedButtonWithIcon(text = stringResource(id = R.string.add_daily_task), icon = Icons.Filled.Add, onClick = {
-                router.launch(AppRoute.AddTaskScreen)
+                goToAddTask.invoke()
             })
         }
 
@@ -165,6 +174,6 @@ fun LazyListScope.stickyHeader(text: String){
 @Composable
 fun MainPreview() {
     PerfectDayTheme {
-        MainScreen(EmptyRouter)
+        MainScreenContent({listOf()}) {}
     }
 }

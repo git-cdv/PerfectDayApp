@@ -32,10 +32,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             PerfectDayTheme {
                 val navigation = rememberNavigation(initialRoute = AppRoute.MainScreen)
-                val (router, _) = navigation
                 NavigationHost(navigation) { currentRoute ->
                     when(currentRoute){
-                        AppRoute.MainScreen -> MainScreen(router)
+                        AppRoute.MainScreen -> MainScreen()
                         AppRoute.AddTaskScreen -> AddTaskScreen()
                     }
                 }
@@ -48,6 +47,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
     PerfectDayTheme {
-        MainScreen(EmptyRouter)
+        MainScreen()
     }
 }

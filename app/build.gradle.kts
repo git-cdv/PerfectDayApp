@@ -52,6 +52,8 @@ android {
 
 dependencies {
 
+    implementation(project(":navigation"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -67,6 +69,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //compose tools
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     //splashscreen
     implementation (libs.androidx.core.splashscreen)

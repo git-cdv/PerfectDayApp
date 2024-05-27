@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Perfect Day"
 include(":app")
- 
+include(":navigation")

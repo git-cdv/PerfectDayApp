@@ -3,7 +3,6 @@ package chkan.example.perfectday.ui.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -33,11 +32,17 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import chkan.example.navigation.Router
+import chkan.example.navigation.EmptyRouter
 import chkan.example.perfectday.R
+import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 
 @Composable
-fun MainScreen() {
+fun MainScreen(router: Router) {
+
+    /*val dailyTasks by mainViewModel.dailyTasks.collectAsStateWithLifecycle()
+    val weeklyTasks by mainViewModel.weeklyTasks.collectAsStateWithLifecycle()*/
 
     val list = remember{
         List(5) {index -> "Text Item #$index"}
@@ -56,7 +61,9 @@ fun MainScreen() {
         }
 
         item {
-            OutlinedButtonWithIcon(text = stringResource(id = R.string.add_daily_task), icon = Icons.Filled.Add, onClick = {})
+            OutlinedButtonWithIcon(text = stringResource(id = R.string.add_daily_task), icon = Icons.Filled.Add, onClick = {
+                router.launch(AppRoute.AddTaskScreen)
+            })
         }
 
         stickyHeader(text = "My Perfect Week")
@@ -116,7 +123,10 @@ fun ListItem(text: String){
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.card_border_width)), onClick = {},
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = dimensionResource(id = R.dimen.small_padding), horizontal = dimensionResource(id = R.dimen.normal_padding))
+            .padding(
+                vertical = dimensionResource(id = R.dimen.small_padding),
+                horizontal = dimensionResource(id = R.dimen.normal_padding)
+            )
     ) {
         Text(
             text = text,
@@ -155,6 +165,6 @@ fun LazyListScope.stickyHeader(text: String){
 @Composable
 fun MainPreview() {
     PerfectDayTheme {
-        MainScreen()
+        MainScreen(EmptyRouter)
     }
 }

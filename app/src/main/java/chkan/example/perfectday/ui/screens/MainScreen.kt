@@ -16,6 +16,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -59,10 +62,18 @@ fun MainScreen() {
         stickyHeader(text = "My Perfect Week")
 
         items(5){ index ->
-            Text(
-                text = "Text #$index",
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(16.dp))
+            Card(
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                shape = RoundedCornerShape(4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Text #$index",
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(16.dp))
+            }
         }
 
         item {
@@ -97,12 +108,22 @@ fun OutlinedButtonWithIcon(text: String, icon: ImageVector, onClick: ()->Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItem(text: String){
-    Text(
-        text = text,
-        color = MaterialTheme.colorScheme.onSurface,
-        modifier = Modifier.padding(16.dp))
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp, pressedElevation = 2.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.card_border_width)), onClick = {},
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = dimensionResource(id = R.dimen.small_padding), horizontal = dimensionResource(id = R.dimen.normal_padding))
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(16.dp))
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)

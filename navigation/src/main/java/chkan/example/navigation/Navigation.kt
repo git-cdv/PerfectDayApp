@@ -4,18 +4,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import chkan.example.navigation.internal.InternalNavigationState
 import chkan.example.navigation.internal.ScreenStack
 
 @Stable
-data class Navigation(
+data class Navigation internal constructor(
     val router: Router,
-    val navigationState: NavigationState
+    val navigationState: NavigationState,
+    internal val internalNavigationState : InternalNavigationState,
 )
 
 @Composable
 fun rememberNavigation (initialRoute: Route): Navigation{
+    //for ability save and restore stack
+    val stack = rememberSaveable(initialRoute) {
+        ScreenStack(mutableStateListOf(initialRoute))
+    }
     return remember(initialRoute) {
-        val stack = ScreenStack(mutableStateListOf(initialRoute))
-        Navigation(router = stack, navigationState = stack)
+        Navigation(router = stack, navigationState = stack, internalNavigationState = stack)
     }
 }

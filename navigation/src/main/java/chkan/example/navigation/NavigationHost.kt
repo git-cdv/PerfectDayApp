@@ -20,13 +20,13 @@ fun NavigationHost(
     modifier: Modifier = Modifier,
     routeMapper: @Composable (Route) -> Unit,
 ){
-    val (router, navigationState) = navigation
+    val (router, navigationState,internalState) = navigation
     BackHandler(enabled = !navigationState.isRoot) {
         router.pop()
     }
     //for ability save screens in stack with data
     val saveableStateHolder = rememberSaveableStateHolder()
-    saveableStateHolder.SaveableStateProvider(key = navigationState.currentRoute) {
+    saveableStateHolder.SaveableStateProvider(key = internalState.currentUuid) {
         Box(modifier = modifier){
             CompositionLocalProvider(LocalRouter provides router) {
                 routeMapper.invoke(navigationState.currentRoute)

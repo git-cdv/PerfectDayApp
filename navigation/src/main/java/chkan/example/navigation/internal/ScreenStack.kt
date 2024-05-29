@@ -11,18 +11,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 internal class ScreenStack(
-    private val routes: SnapshotStateList<Route>
+    private val routes: SnapshotStateList<RouteItem>
 ): NavigationState, Router, InternalNavigationState, Parcelable {
 
-    override val isRoot: Boolean
-        get() = routes.size == 1
-    override val currentRoute: Route
-        get() = routes.last()
+    override val isRoot: Boolean get() = routes.size == 1
+    override val currentRoute: Route get() = routes.last().route
+    override val currentUuid: String get() = routes.last().uuid
 
     private val eventsFlow = MutableSharedFlow<NavigationEvent>(extraBufferCapacity = Int.MAX_VALUE)
 
     override fun launch(route: Route) {
-        routes.add(route)
+        routes.add(RouteItem(route))
     }
 
     override fun pop() {
@@ -36,7 +35,7 @@ internal class ScreenStack(
                 eventsFlow.tryEmit(NavigationEvent.Removed(it))
             }
             clear()
-            add(route)
+            add(RouteItem(route))
         }
     }
 
@@ -46,12 +45,12 @@ internal class ScreenStack(
 
     //for ability save and restore stack
     constructor(parcel: Parcel) : this(
-        SnapshotStateList<Route>().also { newList ->
+        SnapshotStateList<RouteItem>().also { newList ->
             ParcelCompat.readList(
                 parcel,
                 newList,
-                Route::class.java.classLoader,
-                Route::class.java,
+                RouteItem::class.java.classLoader,
+                RouteItem::class.java,
             )
         }
     )

@@ -8,12 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import chkan.example.navigation.NavigationHost
-import chkan.example.navigation.EmptyRouter
 import chkan.example.navigation.rememberNavigation
 import chkan.example.perfectday.core.startExitAnimation
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.screens.AddTaskScreen
-import chkan.example.perfectday.ui.screens.MainScreen
+import chkan.example.perfectday.ui.screens.main.MainScreen
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package chkan.example.perfectday.ui.screens
+package chkan.example.perfectday.ui.screens.main
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -32,11 +32,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import chkan.example.navigation.Router
-import chkan.example.navigation.EmptyRouter
+import androidx.lifecycle.viewmodel.compose.viewModel
 import chkan.example.navigation.LocalRouter
 import chkan.example.perfectday.R
-import chkan.example.perfectday.domain.models.Task
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 
@@ -44,14 +42,17 @@ import chkan.example.perfectday.ui.theme.PerfectDayTheme
 @Composable
 fun MainScreen() {
     val router = LocalRouter.current
-    /*val dailyTasks by mainViewModel.dailyTasks.collectAsStateWithLifecycle()
-    val weeklyTasks by mainViewModel.weeklyTasks.collectAsStateWithLifecycle()*/
-    MainScreenContent(dailyTasks = { listOf() }, goToAddTask = {
+    MainScreenContent(goToAddTask = {
         router.launch(AppRoute.AddTaskScreen)
     })
 }
 @Composable
-fun MainScreenContent(dailyTasks: () -> List<Task>, goToAddTask: () -> Unit) {
+fun MainScreenContent(goToAddTask: () -> Unit) {
+
+    val viewModel = viewModel<MainViewModel>()
+
+    /*val dailyTasks by viewModel.dailyTasks.collectAsStateWithLifecycle()
+    val weeklyTasks by viewModel.weeklyTasks.collectAsStateWithLifecycle()*/
 
     val list = remember{
         List(5) {index -> "Text Item #$index"}
@@ -174,6 +175,6 @@ fun LazyListScope.stickyHeader(text: String){
 @Composable
 fun MainPreview() {
     PerfectDayTheme {
-        MainScreenContent({listOf()}) {}
+        MainScreenContent{}
     }
 }

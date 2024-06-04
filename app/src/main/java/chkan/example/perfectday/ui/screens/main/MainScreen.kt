@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import chkan.example.navigation.LocalRouter
 import chkan.example.perfectday.R
+import chkan.example.perfectday.di.injectViewModel
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 
@@ -49,7 +50,7 @@ fun MainScreen() {
 @Composable
 fun MainScreenContent(goToAddTask: () -> Unit) {
 
-    val viewModel = viewModel<MainViewModel>()
+    val viewModel = injectViewModel<MainViewModel>()
 
     /*val dailyTasks by viewModel.dailyTasks.collectAsStateWithLifecycle()
     val weeklyTasks by viewModel.weeklyTasks.collectAsStateWithLifecycle()*/

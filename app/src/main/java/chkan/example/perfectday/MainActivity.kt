@@ -13,8 +13,11 @@ import chkan.example.perfectday.core.startExitAnimation
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.screens.AddTaskScreen
 import chkan.example.perfectday.ui.screens.main.MainScreen
+import chkan.example.perfectday.ui.screens.main.MainViewModel
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<MainViewModel>()

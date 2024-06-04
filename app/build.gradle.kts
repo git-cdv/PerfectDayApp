@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
 }
 
@@ -42,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -52,7 +53,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
@@ -80,4 +80,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
+    //hilt + ksp
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }

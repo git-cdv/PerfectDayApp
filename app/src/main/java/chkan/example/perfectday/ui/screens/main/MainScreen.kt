@@ -6,7 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -23,8 +26,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,13 +40,12 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import chkan.example.navigation.LocalRouter
 import chkan.example.perfectday.R
 import chkan.example.perfectday.di.injectViewModel
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
-
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen() {
@@ -47,10 +54,17 @@ fun MainScreen() {
         router.launch(AppRoute.AddTaskScreen)
     })
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreenContent(goToAddTask: () -> Unit) {
 
     val viewModel = injectViewModel<MainViewModel>()
+    val scope = rememberCoroutineScope()
+    var isAddTaskBottomSheetVisible by remember { mutableStateOf(false) }
+    val addTaskBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
 
     /*val dailyTasks by viewModel.dailyTasks.collectAsStateWithLifecycle()
     val weeklyTasks by viewModel.weeklyTasks.collectAsStateWithLifecycle()*/
@@ -73,7 +87,10 @@ fun MainScreenContent(goToAddTask: () -> Unit) {
 
         item {
             OutlinedButtonWithIcon(text = stringResource(id = R.string.add_daily_task), icon = Icons.Filled.Add, onClick = {
-                goToAddTask.invoke()
+                scope.launch {
+                    isAddTaskBottomSheetVisible = true
+                    addTaskBottomSheetState.expand()
+                }
             })
         }
 
@@ -98,6 +115,15 @@ fun MainScreenContent(goToAddTask: () -> Unit) {
             OutlinedButtonWithIcon(text = stringResource(id = R.string.add_weekly_task), icon = Icons.Filled.Add, onClick = {})
         }
     }
+
+    AddTaskBottomSheet(
+        isBottomSheetVisible = isAddTaskBottomSheetVisible,
+        sheetState = addTaskBottomSheetState,
+        onDismiss = {
+            scope.launch { addTaskBottomSheetState.hide() }
+                .invokeOnCompletion { isAddTaskBottomSheetVisible = false }
+        }
+    )
 }
 
 @Composable

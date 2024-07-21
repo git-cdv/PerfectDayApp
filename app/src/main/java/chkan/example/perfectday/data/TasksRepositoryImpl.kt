@@ -12,7 +12,8 @@ class TasksRepositoryImpl @Inject constructor (private val dataSource: DataSourc
     TasksRepository {
 
     override fun getDailyTasksFlow(): Flow<List<Task>> = dataSource.getDailyTasksFlow()
-
     override fun getWeeklyTasksFlow(): Flow<List<Task>> = dataSource.getWeeklyTasksFlow()
+    override fun addDailyTask(task: Task) = dataSource.addDailyTask(task)
+    override fun deleteDailyTask(task: Task) = dataSource.deleteDailyTask(task)
 
 }

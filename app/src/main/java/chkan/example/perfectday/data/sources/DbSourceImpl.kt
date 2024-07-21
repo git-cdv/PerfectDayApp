@@ -15,4 +15,12 @@ class DbSourceImpl @Inject constructor (): DataSource {
     override fun getWeeklyTasksFlow(): Flow<List<Task>> {
         return flowOf(listOf())
     }
+
+    override fun addDailyTask(task: Task) {
+
+    }
+
+    override fun deleteDailyTask(task: Task) {
+
+    }
 }

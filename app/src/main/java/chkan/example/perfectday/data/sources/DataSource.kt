@@ -7,4 +7,8 @@ interface DataSource {
     fun getDailyTasksFlow(): Flow<List<Task>>
 
     fun getWeeklyTasksFlow(): Flow<List<Task>>
+
+    fun addDailyTask(task: Task)
+
+    fun deleteDailyTask(task: Task)
 }

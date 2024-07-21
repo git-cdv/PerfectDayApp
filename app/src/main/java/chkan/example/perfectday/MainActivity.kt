@@ -3,10 +3,12 @@ package chkan.example.perfectday
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import chkan.example.navigation.NavigationHost
 import chkan.example.navigation.rememberNavigation
 import chkan.example.perfectday.core.startExitAnimation
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             PerfectDayTheme {
+                enableEdgeToEdge()
                 val navigation = rememberNavigation(initialRoute = AppRoute.MainScreen)
                 NavigationHost(navigation) { currentRoute ->
                     when(currentRoute){

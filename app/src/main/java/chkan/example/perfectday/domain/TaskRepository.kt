@@ -1,11 +1,11 @@
 package chkan.example.perfectday.domain
 
-import chkan.example.perfectday.domain.models.Task
+import chkan.example.perfectday.data.models.DataTask
 import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
-    fun getDailyTasksFlow(): Flow<List<Task>>
-    fun getWeeklyTasksFlow(): Flow<List<Task>>
-    fun addDailyTask(task: Task)
-    fun deleteDailyTask(task: Task)
+    fun getDailyTasksFlow(): Flow<List<DataTask>>
+    suspend fun getWeeklyTasksFlow(): Flow<List<DataTask>>
+    suspend fun addDailyTask(task: DataTask)
+    suspend fun deleteDailyTask(task: DataTask)
 }

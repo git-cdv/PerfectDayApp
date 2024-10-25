@@ -6,10 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -40,12 +37,14 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import chkan.example.navigation.LocalRouter
 import chkan.example.perfectday.R
 import chkan.example.perfectday.di.injectViewModel
 import chkan.example.perfectday.routes.AppRoute
 import chkan.example.perfectday.ui.theme.PerfectDayTheme
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 @Composable
 fun MainScreen() {
@@ -59,19 +58,16 @@ fun MainScreen() {
 @Composable
 fun MainScreenContent(goToAddTask: () -> Unit) {
 
-    val viewModel = injectViewModel<MainViewModel>()
+    val viewModel = injectViewModel<DailyTasksViewModel>()
     val scope = rememberCoroutineScope()
     var isAddTaskBottomSheetVisible by remember { mutableStateOf(false) }
     val addTaskBottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
 
-    /*val dailyTasks by viewModel.dailyTasks.collectAsStateWithLifecycle()
-    val weeklyTasks by viewModel.weeklyTasks.collectAsStateWithLifecycle()*/
-
-    val list = remember{
-        List(5) {index -> "Text Item #$index"}
-    }
+    val dailyTasks by viewModel.dailyTasks.collectAsStateWithLifecycle(
+        initialValue = listOf()
+    )
 
     LazyColumn(modifier =
     Modifier
@@ -81,8 +77,8 @@ fun MainScreenContent(goToAddTask: () -> Unit) {
 
         stickyHeader(text = "My Perfect Day")
 
-        items(list){ item ->
-            ListItem(text = item)
+        items(dailyTasks, key = {it.id}){ task ->
+            ListItem(text = task.title)
         }
 
         item {
@@ -119,6 +115,9 @@ fun MainScreenContent(goToAddTask: () -> Unit) {
     AddTaskBottomSheet(
         isBottomSheetVisible = isAddTaskBottomSheetVisible,
         sheetState = addTaskBottomSheetState,
+        createTask = { title ->
+            viewModel.addDailyTask(title,LocalDateTime.now())
+        },
         onDismiss = {
             scope.launch { addTaskBottomSheetState.hide() }
                 .invokeOnCompletion { isAddTaskBottomSheetVisible = false }

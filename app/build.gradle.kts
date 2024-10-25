@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "chkan.example.perfectday"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -30,6 +30,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        create("withoutDebug") {
+            initWith(buildTypes.getByName("release"))
+            isDebuggable = false
+            isProfileable = true
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -80,6 +86,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     //hilt + ksp
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
